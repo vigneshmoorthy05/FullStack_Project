@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Secure Payment</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            position: relative;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Background Video */
+        .video-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        .video-container video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Payment Box */
+        .payment-container {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: left;
+            max-width: 400px;
+            width: 100%;
+            backdrop-filter: blur(5px);
+        }
+
+        .payment-container h2 {
+            margin-top: 0;
+            color: #333;
+        }
+
+        .payment-option {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .payment-option input {
+            margin-right: 10px;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .pay-button {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            margin-top: 15px;
+            background: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .pay-button:hover {
+            background: #218838;
+        }
+
+        .order-summary {
+            background: #e9ecef;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Background Video -->
+    <div class="video-container">
+        <video autoplay loop muted>
+            <source src="background5.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+
+    <!-- Payment Form -->
+    <div class="payment-container">
+        <h2>Secure Payment</h2>
+        
+        <div class="order-summary">
+            <p><strong>Product:</strong> <span id="product-name"></span></p>
+            <p><strong>Price:</strong> $<span id="product-price"></span></p>
+        </div>
+
+        <h3>Payment Method</h3>
+        <label class="payment-option">
+            <input type="radio" name="payment" value="credit-card" checked> Credit/Debit Card
+        </label>
+        <label class="payment-option">
+            <input type="radio" name="payment" value="upi"> UPI / Google Pay
+        </label>
+        <label class="payment-option">
+            <input type="radio" name="payment" value="net-banking"> Net Banking
+        </label>
+
+        <h3>Card Details</h3>
+        <input type="text" class="input-field" placeholder="Card Number">
+        <input type="text" class="input-field" placeholder="Name on Card">
+        <input type="text" class="input-field" placeholder="Expiry Date (MM/YY)">
+        <input type="text" class="input-field" placeholder="CVV">
+
+        <button class="pay-button" onclick="confirmPayment()">Pay Securely</button>
+    </div>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        document.getElementById("product-name").textContent = urlParams.get("name") || "Selected Product";
+        document.getElementById("product-price").textContent = urlParams.get("price") || "0";
+
+        function confirmPayment() {
+            alert("Payment Successful! 🎉 Thank you for your purchase.");
+            window.location.href = "index.html";  // Redirect back to homepage
+        }
+    </script>
+
+</body>
+</html>

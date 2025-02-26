@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Electronics Shopping</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .container {
+            text-align: center;
+            padding: 10px;
+        }
+        .header {
+            width: 100%;
+            background-color: #2874f0;
+            padding: 15px;
+            color: white;
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .search-bar {
+            width: 80%;
+            padding: 10px;
+            margin: 20px auto;
+            display: block;
+            border-radius: 30px;
+            border: 1px solid #ccc;
+            font-size: 16px;
+            text-align: center;
+        }
+        .product-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+        .card {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 200px;
+            transition: transform 0.3s ease-in-out;
+        }
+        .card:hover {
+            transform: scale(1.05);
+        }
+        .card img {
+            width: 100%;
+            height: 150px;
+            object-fit: contain;
+            border-radius: 8px;
+        }
+        .card h3 {
+            margin: 10px 0;
+            font-size: 16px;
+            font-weight: bold;
+        }
+        .card .price {
+            font-size: 18px;
+            font-weight: bold;
+            color: #ff5722;
+        }
+        .button {
+            display: inline-block;
+            padding: 10px 15px;
+            margin-top: 10px;
+            background: #2874f0;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            width: 100%;
+        }
+        .button:hover {
+            background: #0056b3;
+        }
+        .footer {
+            text-align: center;
+            padding: 10px;
+            background-color: #2874f0;
+            color: white;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">Electronics Shopping</div>
+    
+    <input type="text" class="search-bar" id="search" placeholder="Search for electronics..." onkeyup="searchProducts()">
+    
+    <div class="product-container" id="product-container"></div>
+
+    <script>
+        function createProduct(id, name, price, image) {
+            return { id, name, price, image };
+        }
+
+        const products = [
+            createProduct(1, "Samsung Smart TV", "45000", "tv.jpg"),
+            createProduct(2, "Apple MacBook Air", "95000", "macbook.jpg"),
+            createProduct(3, "Sony Headphones", "7000", "headphones.jpg"),
+            createProduct(4, "Dell Inspiron Laptop", "55000", "dell.jpg"),
+            createProduct(5, "Canon DSLR Camera", "65000", "camera.jpg"),
+            createProduct(6, "Apple iPad Pro", "85000", "ipad.jpg"),
+            createProduct(7, "Samsung Galaxy Tab", "32000", "tablet.jpg"),
+            createProduct(8, "Bose Bluetooth Speaker", "15000", "speaker.jpg"),
+            createProduct(9, "Logitech Keyboard", "4000", "keyboard.jpg"),
+            createProduct(10, "Razer Gaming Mouse", "6000", "mouse.jpg"),
+            createProduct(11, "HP Pavilion Laptop", "62000", "hp.jpg"),
+            createProduct(12, "Lenovo ThinkPad", "70000", "thinkpad.jpg"),
+            createProduct(13, "Samsung Refrigerator", "50000", "fridge.jpg"),
+            createProduct(14, "LG Washing Machine", "42000", "washing_machine.jpg"),
+            createProduct(15, "Sony 4K Projector", "120000", "projector.jpg"),
+        ];
+
+        function renderProducts(filteredProducts = products) {
+            const container = document.getElementById("product-container");
+            container.innerHTML = "";
+
+            if (filteredProducts.length === 0) {
+                container.innerHTML = "<p>No products found</p>";
+                return;
+            }
+
+            filteredProducts.forEach(product => {
+                const card = document.createElement("div");
+                card.classList.add("card");
+                card.innerHTML = `
+                    <img src="${product.image}" alt="${product.name}">
+                    <h3>${product.name}</h3>
+                    <p class="price">$${product.price}</p>
+                    <button class="button">Buy Now</button>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function searchProducts() {
+            const query = document.getElementById("search").value.toLowerCase();
+            const filteredProducts = products.filter(product =>
+                product.name.toLowerCase().includes(query)
+            );
+            renderProducts(filteredProducts);
+        }
+
+        renderProducts();
+    </script>
+
+</body>
+</html>

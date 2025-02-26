@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <title>VJ Mobile Shopping Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 10px;
+        }
+        .header {
+            background: #007bff;
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .header input {
+            width: 50%;
+            padding: 8px;
+            border-radius: 5px;
+            border: none;
+        }
+        .search-bar {
+            width: 90%;
+            padding: 10px;
+            margin-top: 20px;
+            border-radius: 30px;
+            border: 1px solid #ccc;
+            font-size: 16px;
+        }
+        .product-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 20px;
+            gap: 20px;
+        }
+        .card {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 180px;
+            transition: transform 0.3s ease-in-out;
+        }
+        .card:hover {
+            transform: scale(1.05);
+        }
+        .card img {
+            width: 100%;
+            height: 180px;
+            object-fit: contain;
+            border-radius: 8px;
+        }
+        .card h3 {
+            margin: 10px 0;
+            font-size: 16px;
+            font-weight: bold;
+        }
+        .card p {
+            color: #555;
+            font-size: 14px;
+        }
+        .card .price {
+            font-size: 18px;
+            font-weight: bold;
+            color: #ff5722;
+        }
+        .button {
+            display: inline-block;
+            padding: 10px 15px;
+            margin-top: 10px;
+            background: #2874f0;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            width: 100%;
+        }
+        .button:hover {
+            background: #0056b3;
+        }
+        .footer {
+            text-align: center;
+            padding: 10px;
+            background-color: #2874f0;
+            color: white;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>MobileMart</h1>
+        <input type="text" id="search" placeholder="Search for products..." onkeyup="searchProducts()">
+        <div class="cart">🛒 Cart (<span id="cart-count">0</span>)</div>
+    </div>
+    
+    <div class="product-container" id="product-container"></div>
+
+    <script>
+        function createProduct(id, name, price, image) {
+            return { id, name, price, image };
+        }
+
+        const products = [
+            createProduct(1, "Poco M2 Pro", "16000", "poco.png"),
+            createProduct(2, "Redmi Note 10", "18000", "redmi.png"),
+            createProduct(3, "Samsung Galaxy M32", "19999", "samsung.jpg"),
+            createProduct(4, "Realme Narzo 30", "20000", "realme.png"),
+            createProduct(5, "OnePlus Nord 2", "35000", "oneplus.png"),
+            createProduct(6, "Vivo V21 5G", "19500", "vivo.png"),
+            createProduct(7, "Xiaomi Mi 11X", "30000", "xiaomi.png"),
+            createProduct(8, "iPhone 12", "78000", "iphone.jpeg"),
+			createProduct(9, "Oppo A53", "12000", "oppo.png"),
+            createProduct(10, "Moto G60", "13000", "moto.jpg"),
+            createProduct(11, "Infinix Note 10", "15000", "infinix.jpg"),
+            createProduct(12, "Asus ROG Phone 5", "65000", "asus.png"),
+            createProduct(13, "Nokia 5.4", "28000", "nokia.jpg"),
+            createProduct(14, "Micromax IN 1", "9999", "micromax.jpg"),
+            createProduct(15, "Lava Agni 5G", "8500", "lava.jpg"),
+            createProduct(16, "iQOO Z3 5G", "18750", "iqoo.jpg"),
+            createProduct(17, "Samsung Galaxy A12", "32000", "samsungA12.jpg"),
+            createProduct(18, "Realme 8 Pro", "24000", "realme8.jpg"),
+        ];
+
+        function renderProducts(filteredProducts = products) {
+            const container = document.getElementById("product-container");
+            container.innerHTML = "";
+
+            if (filteredProducts.length === 0) {
+                container.innerHTML = "<p>No products found</p>";
+                return;
+            }
+
+            filteredProducts.forEach(product => {
+                const card = document.createElement("div");
+                card.classList.add("card");
+                card.innerHTML = `
+                    <img src="${product.image}" alt="${product.name}">
+                    <h3>${product.name}</h3>
+                    <p class="price">$${product.price}</p>
+                    <button class="button" onclick="buyNow('${product.name}', '${product.price}')">Buy Now</button>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function searchProducts() {
+            const query = document.getElementById("search").value.toLowerCase();
+            const filteredProducts = products.filter(product =>
+                product.name.toLowerCase().includes(query)
+            );
+            renderProducts(filteredProducts);
+        }
+
+        function buyNow(name, price) {
+            window.location.href = `checkout.html?name=${encodeURIComponent(name)}&price=${encodeURIComponent(price)}`;
+        }
+
+        renderProducts();
+    </script>
+
+</body>
+</html>
